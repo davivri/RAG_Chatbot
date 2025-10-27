@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Center - We're Here to Help</title>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        * {
+            font-family: inherit;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            height: 80px;
+            width: auto;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Hero Welcome Section */
+        .hero-welcome {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.03) 0%, rgba(249, 250, 251, 0) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-welcome::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-welcome-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-welcome h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-welcome p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+            flex: 1;
+        }
+
+        /* Panel Status Section */
+        .panel-status {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+        }
+
+        .panel-status h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .status-item {
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .status-item.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .status-item.error {
+            border-left-color: #ef4444;
+        }
+
+        .status-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .status-item h3 {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+        }
+
+        .status-indicator.warning {
+            background: #f59e0b;
+        }
+
+        .status-indicator.error {
+            background: #ef4444;
+        }
+
+        .status-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 1) 100%);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .action-card:hover::before {
+            opacity: 1;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .action-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .action-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .action-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .action-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .action-card.chat {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .action-card.chat:hover {
+            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .action-card.email {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .action-card.email:hover {
+            box-shadow: 0 12px 24px rgba(245, 158, 11, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .action-card.phone {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .action-card.phone:hover {
+            box-shadow: 0 12px 24px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .action-card.docs {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .action-card.docs:hover {
+            box-shadow: 0 12px 24px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .action-card:hover .action-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .action-card.chat .action-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .action-card.email .action-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .action-card.phone .action-icon {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .action-card.docs .action-icon {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        .action-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .action-card p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .action-card .availability {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .action-card .availability.online {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem 2rem;
+            }
+
+            .quick-actions {
+                gap: 1.25rem;
+            }
+        }
+
+        /* Responsive - Mobile */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-img {
+                height: 60px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo-text p {
+                font-size: 0.875rem;
+            }
+
+            .status-badge {
+                font-size: 0.875rem;
+                padding: 0.625rem 1rem;
+            }
+
+            .hero-welcome {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .hero-welcome h2 {
+                font-size: 1.75rem;
+            }
+
+            .hero-welcome p {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem 2rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .action-card {
+                padding: 1.25rem;
+            }
+
+            .action-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .action-card h3 {
+                font-size: 1rem;
+            }
+
+            .action-card p {
+                font-size: 0.8125rem;
+            }
+
+            .panel-status {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .panel-status h2 {
+                font-size: 1.5rem;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .status-item {
+                padding: 1.25rem;
+            }
+
+            /* Modal adjustments */
+            .modal {
+                padding: 0.5rem;
+            }
+
+            .modal-content {
+                max-height: 95vh;
+                border-radius: 16px;
+            }
+
+            .modal-header {
+                padding: 1.5rem;
+            }
+
+            .modal-header h3 {
+                font-size: 1.25rem;
+            }
+
+            /* Email form mobile */
+            .email-form {
+                padding: 1.5rem;
+            }
+
+            .form-section {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .form-section-title {
+                font-size: 1rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .form-input,
+            .form-select,
+            .form-textarea {
+                padding: 0.875rem 0.875rem 0.875rem 2.5rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .form-input.no-icon,
+            .form-select,
+            .form-textarea {
+                padding-left: 0.875rem;
+            }
+
+            .form-textarea {
+                min-height: 120px;
+            }
+
+            .form-file-wrapper {
+                padding: 1.5rem;
+            }
+
+            .file-upload-icon {
+                font-size: 2rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .btn-cancel,
+            .btn-submit {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .checkbox-item {
+                padding: 0.875rem;
+            }
+
+            .checkbox-item input[type="radio"] {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* Chat interface mobile */
+            .chat-interface {
+                height: calc(100vh - 2rem);
+                max-height: 700px;
+            }
+
+            .chat-header-custom {
+                padding: 2rem 1.5rem;
+            }
+
+            .chat-header-custom h2 {
+                font-size: 1.75rem;
+            }
+
+            .chat-messages {
+                padding: 1.5rem;
+            }
+
+            .chat-message-wrapper {
+                max-width: 80%;
+            }
+
+            .chat-message-content {
+                padding: 0.875rem 1rem;
+                font-size: 0.9375rem;
+            }
+
+            .chat-input-container {
+                padding: 1rem 1.5rem;
+                gap: 0.5rem;
+            }
+
+            .chat-tool-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.875rem;
+            }
+
+            .chat-input {
+                padding: 0.75rem 1rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .chat-send-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .request-support-btn {
+                padding: 0.875rem 1.25rem;
+                font-size: 0.9375rem;
+            }
+
+            #supportButtonContainer {
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        /* Responsive - Small Mobile */
+        @media (max-width: 480px) {
+            .hero-welcome h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero-welcome p {
+                font-size: 0.9375rem;
+            }
+
+            .action-card {
+                padding: 1rem;
+            }
+
+            .action-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .modal-header {
+                padding: 1.25rem;
+            }
+
+            .email-form {
+                padding: 1.25rem;
+            }
+
+            .form-section {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1.25rem;
+            }
+
+            .chat-header-custom {
+                padding: 1.5rem 1rem;
+            }
+
+            .chat-header-custom h2 {
+                font-size: 1.5rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+            }
+
+            .chat-input-container {
+                padding: 0.875rem 1rem;
+            }
+
+            .chat-tool-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .chat-send-btn {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero-welcome {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .chat-interface {
+                height: calc(100vh - 1rem);
+            }
+
+            .chat-header-custom {
+                padding: 1.5rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .action-card {
+                transition: transform 0.2s ease;
+            }
+
+            .action-card:active {
+                transform: scale(0.98);
+            }
+
+            .btn-submit:active,
+            .btn-cancel:active,
+            .chat-send-btn:active,
+            .chat-tool-btn:active {
+                transform: scale(0.95);
+            }
+
+            /* Larger touch targets */
+            .modal-close {
+                width: 44px;
+                height: 44px;
+                font-size: 1.125rem;
+            }
+
+            .message-action-btn {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Modal for Chat */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .modal-header h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            height: 600px;
+        }
+
+        /* Email Form Styles */
+        .email-form {
+            padding: 2.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .form-section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section-title i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .form-input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+
+        .form-input.no-icon,
+        .form-select,
+        .form-textarea {
+            padding-left: 1rem;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input:focus + .form-input-icon,
+        .form-select:focus + .form-input-icon {
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        .char-counter {
+            position: absolute;
+            bottom: 0.75rem;
+            right: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            background: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .form-file-wrapper {
+            position: relative;
+            border: 2px dashed #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            cursor: pointer;
+        }
+
+        .form-file-wrapper:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+            transform: translateY(-2px);
+        }
+
+        .form-file-wrapper.drag-over {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: scale(1.02);
+        }
+
+        .form-file {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .file-upload-text {
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-hint {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .priority-badge.low {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .priority-badge.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-badge.high {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .priority-badge.urgent {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-cancel,
+        .btn-submit {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .form-progress {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        /* Checkbox styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item.checked {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .email-info {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Custom Chat Interface */
+        .chat-interface {
+            display: flex;
+            flex-direction: column;
+            height: 700px;
+            background: #f5f5f5;
+        }
+
+        .chat-header-custom {
+            padding: 2.5rem 2rem;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        .chat-header-custom h2 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: #f5f5f5;
+        }
+
+        .chat-message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-end;
+            opacity: 0;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+            animation: slideInRight 0.3s ease-out forwards;
+        }
+
+        .chat-message.bot {
+            animation: slideInLeft 0.3s ease-out forwards;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .chat-message.bot .chat-avatar {
+            background: white;
+            padding: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .chat-message.bot .chat-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .chat-message.user .chat-avatar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .chat-message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+            gap: 0.25rem;
+        }
+
+        .chat-message-content {
+            padding: 1rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .chat-message-content:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chat-message.bot .chat-message-content {
+            background: white;
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.user .chat-message-content {
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-timestamp {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            padding: 0 0.5rem;
+        }
+
+        .chat-message.user .chat-timestamp {
+            text-align: right;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            padding: 0 0.5rem;
+        }
+
+        .chat-message:hover .message-actions {
+            opacity: 1;
+        }
+
+        .message-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .message-action-btn:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 0.25rem;
+            padding: 1rem 1.25rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-light);
+            animation: typingDot 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .chat-input-container {
+            padding: 1.5rem 2rem;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-tool-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #6b7280;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chat-tool-btn:hover {
+            background: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        input, textarea, select, button {
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .chat-send-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            background: #9ca3af;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .chat-send-btn.active {
+            background: var(--primary);
+        }
+
+        .request-support-btn {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .request-support-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .chat-interface {
+                height: 600px;
+            }
+
+            .chat-header-custom h2 {
+                font-size: 1.75rem;
+            }
+
+            .chat-message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="Bild.png" alt="Company Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>Support Center</h1>
+                    <p>We're here to help, 24/7</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Welcome Section -->
+    <section class="hero-welcome">
+        <div class="hero-welcome-content">
+            <h2>Welcome to Support</h2>
+            <p>Choose your preferred way to get help. Our team is ready to assist you with any questions or concerns.</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card chat" onclick="openChatModal()">
+                <div class="action-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Live Chat</h3>
+                <p>Chat with our AI assistant or connect with a human agent instantly</p>
+                <span class="availability online">Available Now</span>
+            </div>
+
+            <div class="action-card email" onclick="openEmailModal()">
+                <div class="action-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email Support</h3>
+                <p>Send us a detailed message and get a response within 2 hours</p>
+                <span class="availability">Response in 2h</span>
+            </div>
+
+            <div class="action-card phone">
+                <div class="action-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Phone Support</h3>
+                <p>Speak directly with our support team for urgent matters</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem; font-weight: 600; line-height: 1.6;">
+                    Accounting: +49 (0)2131 - 36 63 0 (dial 1)<br>
+                    Technical: +49 (0)2131 - 36 63 0 (dial 2)
+                </p>
+                <span class="availability online">Available 24/7</span>
+            </div>
+
+            <div class="action-card docs" onclick="window.open('https://secure.carriercms.com/sites/emea_fsp/DACH/SitePages/Home.aspx', '_blank')" style="cursor: pointer;">
+                <div class="action-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Documentation</h3>
+                <p>Browse our comprehensive knowledge base and tutorials</p>
+                <p style="font-size: 0.75rem; margin-top: 0.5rem; color: #f59e0b; font-weight: 600;"><i class="fas fa-lock"></i> Username and password required</p>
+                <span class="availability">1000+ Articles</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal" id="chatModal">
+        <div class="modal-content" style="max-width: 1000px;">
+            <button class="modal-close" onclick="closeChatModal()" style="position: absolute; top: 1rem; right: 1rem; z-index: 10; background: rgba(255,255,255,0.9); color: var(--text-dark); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="chat-interface">
+                <div class="chat-header-custom">
+                    <h2>How Can I Help You</h2>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will appear here -->
+                </div>
+                <div class="chat-input-container">
+                    <button class="chat-tool-btn" title="Attach file">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="chat-tool-btn" title="Tools">
+                        <i class="fas fa-wrench"></i>
+                    </button>
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Message...">
+                    <button class="chat-tool-btn" title="Voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="chat-send-btn" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div id="supportButtonContainer" style="padding: 1rem 2rem; background: #f5f5f5; border-top: 1px solid #e5e7eb; display: none;">
+                    <button class="request-support-btn" id="requestSupportBtn" onclick="requestHumanSupport()">
+                        <i class="fas fa-headset"></i> Request Human Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Request Modal -->
+    <div class="modal" id="supportRequestModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-headset"></i> Support-Anfrage stellen</h3>
+                <button class="modal-close" onclick="closeSupportRequestModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="height: auto; max-height: 80vh; overflow-y: auto;">
+                <form id="supportRequestForm" class="email-form">
+                    <div class="form-section">
+                        <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                            Bitte geben Sie Ihre Kontaktdaten an, damit unser Support-Team Sie erreichen kann.
+                        </p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Name <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="text" id="supportName" class="form-input" placeholder="Ihr vollständiger Name" required>
+                                <i class="fas fa-user form-input-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">E-Mail-Adresse <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="email" id="supportEmail" class="form-input" placeholder="ihre.email@beispiel.de" required>
+                                <i class="fas fa-envelope form-input-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Kundennummer <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="text" id="supportCustomerNumber" class="form-input" placeholder="Ihre Kundennummer" required>
+                                <i class="fas fa-id-card form-input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="closeSupportRequestModal()" class="btn-cancel">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Anfrage senden
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div class="modal" id="emailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> Email Support</h3>
+                <button class="modal-close" onclick="closeEmailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="height: auto; max-height: 80vh; overflow-y: auto;">
+                <form id="emailForm" class="email-form">
+                    <!-- Progress Indicator -->
+                    <div class="form-progress">
+                        <div class="progress-step active"></div>
+                        <div class="progress-step"></div>
+                        <div class="progress-step"></div>
+                    </div>
+
+                    <!-- Section 1: Your Information -->
+                    <div class="form-section">
+                        <h4 class="form-section-title">
+                            <i class="fas fa-user"></i>
+                            Your Information
+                        </h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Name <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="text" name="name" class="form-input" placeholder="Enter your full name" required>
+                                <i class="fas fa-user form-input-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                                <i class="fas fa-envelope form-input-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <div class="form-input-wrapper">
+                                <input type="tel" name="phone" class="form-input" placeholder="+1 (555) 000-0000">
+                                <i class="fas fa-phone form-input-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Customer Number <span class="required">*</span></label>
+                            <div class="form-input-wrapper">
+                                <input type="text" name="customerNumber" class="form-input" placeholder="Enter your customer number" required>
+                                <i class="fas fa-id-card form-input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Request Details -->
+                    <div class="form-section">
+                        <h4 class="form-section-title">
+                            <i class="fas fa-clipboard-list"></i>
+                            Request Details
+                        </h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Subject <span class="required">*</span></label>
+                            <input type="text" name="subject" class="form-input no-icon" placeholder="Brief description of your inquiry" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Priority</label>
+                            <select name="priority" class="form-select" id="prioritySelect">
+                                <option value="low">🟢 Low - General question</option>
+                                <option value="medium" selected>🟡 Medium - Need assistance</option>
+                                <option value="high">🟠 High - Important issue</option>
+                                <option value="urgent">🔴 Urgent - Critical problem</option>
+                            </select>
+                            <div class="priority-badge medium" id="priorityBadge">
+                                🟡 Expected response: Within 4 hours
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Category <span class="required">*</span></label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item" id="accountingCheckbox">
+                                    <input type="radio" id="accounting" name="category" value="accounting">
+                                    <label for="accounting">
+                                        <span>💳 Accounting</span>
+                                    </label>
+                                    <div class="email-info">customerservice.DACH@carrier.com</div>
+                                </div>
+                                <div class="checkbox-item" id="technicalCheckbox">
+                                    <input type="radio" id="technical" name="category" value="technical">
+                                    <label for="technical">
+                                        <span>🔧 Technical</span>
+                                    </label>
+                                    <div class="email-info">support.DACH@carrier.com</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Message <span class="required">*</span></label>
+                            <textarea name="message" class="form-textarea no-icon" placeholder="Please describe your issue or question in detail..." required id="messageField"></textarea>
+                            <span class="char-counter" id="charCounter">0 / 1000</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Additional Information -->
+                    <div class="form-section">
+                        <h4 class="form-section-title">
+                            <i class="fas fa-paperclip"></i>
+                            Additional Information
+                        </h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Attachments</label>
+                            <div class="form-file-wrapper" id="fileWrapper">
+                                <input type="file" name="attachments" class="form-file" multiple accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" id="fileInput">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">Drop files here or click to browse</div>
+                                <span class="form-hint">Max 5 files, 10MB each (PDF, DOC, TXT, PNG, JPG)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="closeEmailModal()" class="btn-cancel">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        let chatInitialized = false;
+        let currentSessionId = null;
+
+        window.openChatModal = function() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.add('active');
+            
+            // Generate session ID once when chat opens (if not already generated)
+            if (!currentSessionId) {
+                currentSessionId = 'web-chat-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                console.log('New chat session started:', currentSessionId);
+            }
+            
+            if (!chatInitialized) {
+                initializeChat();
+                chatInitialized = true;
+            }
+        };
+
+        function initializeChat() {
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Update send button state based on input
+            chatInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    sendBtn.classList.add('active');
+                } else {
+                    sendBtn.classList.remove('active');
+                }
+            });
+
+            // Send message function
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addMessage(message, 'user');
+                chatInput.value = '';
+                sendBtn.classList.remove('active');
+
+                // Show typing indicator
+                showTypingIndicator();
+
+                try {
+                    // Send message to n8n webhook with persistent session ID
+                    const response = await fetch('http://100.118.164.23:5678/webhook/9226b918-31f1-4039-a303-0e0f1bb343a7/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'sendMessage',
+                            chatInput: message,
+                            sessionId: currentSessionId  // Use the persistent session ID
+                        })
+                    });
+
+                    // Remove typing indicator
+                    const typing = document.getElementById('typing-indicator');
+                    if (typing) typing.remove();
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        // Add bot response
+                        const botMessage = data.output || data.message || data.response || 'I received your message.';
+                        addMessage(botMessage, 'bot');
+                        // Show support button after first bot response
+                        showSupportButton();
+                    } else {
+                        addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                        showSupportButton();
+                    }
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    // Remove typing indicator
+                    const typing = document.getElementById('typing-indicator');
+                    if (typing) typing.remove();
+                    addMessage('Sorry, I could not connect to the server. Please check if the n8n webhook is running.', 'bot');
+                    showSupportButton();
+                }
+            }
+
+            // Function to show support button
+            function showSupportButton() {
+                const supportContainer = document.getElementById('supportButtonContainer');
+                if (supportContainer) {
+                    supportContainer.style.display = 'block';
+                }
+            }
+
+            // Send on button click
+            sendBtn.addEventListener('click', sendMessage);
+
+            // Send on Enter key
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Add initial bot message
+            addMessage('Hello! Welcome to our support center. How can I assist you today?', 'bot');
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.setAttribute('data-sender', sender);
+            messageDiv.setAttribute('data-message', text);
+            const timestamp = new Date();
+            messageDiv.setAttribute('data-timestamp', timestamp.toISOString());
+            
+            // Create avatar
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'chat-avatar';
+            
+            if (sender === 'bot') {
+                // Use company logo for bot
+                const logoImg = document.createElement('img');
+                logoImg.src = 'Bild.png';
+                logoImg.alt = 'AI Assistant';
+                avatarDiv.appendChild(logoImg);
+            } else {
+                // Use initials for user
+                avatarDiv.textContent = 'You';
+            }
+            
+            // Create message wrapper
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.className = 'chat-message-wrapper';
+            
+            // Create message content
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'chat-message-content';
+            contentDiv.textContent = text;
+            
+            // Create timestamp
+            const timestampDiv = document.createElement('div');
+            timestampDiv.className = 'chat-timestamp';
+            timestampDiv.textContent = formatTimestamp(timestamp);
+            
+            // Create message actions (for bot messages)
+            if (sender === 'bot') {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'message-actions';
+                
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'message-action-btn';
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                copyBtn.title = 'Copy message';
+                copyBtn.onclick = () => {
+                    navigator.clipboard.writeText(text);
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                    }, 2000);
+                };
+                
+                actionsDiv.appendChild(copyBtn);
+                wrapperDiv.appendChild(contentDiv);
+                wrapperDiv.appendChild(timestampDiv);
+                wrapperDiv.appendChild(actionsDiv);
+            } else {
+                wrapperDiv.appendChild(contentDiv);
+                wrapperDiv.appendChild(timestampDiv);
+            }
+            
+            messageDiv.appendChild(avatarDiv);
+            messageDiv.appendChild(wrapperDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function formatTimestamp(date) {
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000); // difference in seconds
+            
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot';
+            typingDiv.id = 'typing-indicator';
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'chat-avatar';
+            const logoImg = document.createElement('img');
+            logoImg.src = 'Bild.png';
+            logoImg.alt = 'AI Assistant';
+            avatarDiv.appendChild(logoImg);
+            
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.className = 'chat-message-wrapper';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'chat-message-content';
+            
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'typing-indicator';
+            indicatorDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            contentDiv.appendChild(indicatorDiv);
+            wrapperDiv.appendChild(contentDiv);
+            typingDiv.appendChild(avatarDiv);
+            typingDiv.appendChild(wrapperDiv);
+            
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Function to extract conversation (without timestamps)
+        function getFullConversation() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messages = Array.from(chatMessages.querySelectorAll('.chat-message'));
+            
+            return messages.map(msg => {
+                const sender = msg.getAttribute('data-sender');
+                const content = msg.getAttribute('data-message');
+                
+                return {
+                    type: sender === 'user' ? 'human' : 'ai',
+                    content: content
+                };
+            });
+        }
+
+        window.requestHumanSupport = function() {
+            if (!currentSessionId) {
+                alert('⚠️ Keine aktive Sitzung gefunden. Bitte starten Sie zuerst eine Unterhaltung.');
+                return;
+            }
+
+            const chatMessages = document.getElementById('chatMessages');
+            const messages = chatMessages.querySelectorAll('.chat-message');
+            
+            if (messages.length === 0) {
+                alert('Keine Unterhaltung zum Senden. Bitte chatten Sie zuerst.');
+                return;
+            }
+
+            // Open support request modal instead of directly sending
+            openSupportRequestModal();
+        };
+
+        // Support Request Modal Functions
+        window.openSupportRequestModal = function() {
+            const modal = document.getElementById('supportRequestModal');
+            modal.classList.add('active');
+        };
+
+        window.closeSupportRequestModal = function() {
+            const modal = document.getElementById('supportRequestModal');
+            modal.classList.remove('active');
+            document.getElementById('supportRequestForm').reset();
+        };
+
+        // Handle support request form submission
+        document.getElementById('supportRequestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('supportName').value.trim();
+            const email = document.getElementById('supportEmail').value.trim();
+            const customerNumber = document.getElementById('supportCustomerNumber').value.trim();
+            
+            // Get full conversation
+            const fullConversation = getFullConversation();
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wird gesendet...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('http://100.118.164.23:5678/webhook/3eca44d2-113b-4461-8a2c-aac4ea8ba945', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        sessionId: currentSessionId,
+                        action: 'request_human_support',
+                        userInfo: {
+                            name: name,
+                            email: email,
+                            customerNumber: customerNumber
+                        },
+                        fullConversation: fullConversation,
+                        messageCount: fullConversation.length,
+                        metadata: {
+                            timestamp: new Date().toISOString(),
+                            source: 'web_chat',
+                            userAgent: navigator.userAgent,
+                            language: navigator.language || 'de'
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    console.log('Support-Anfrage erfolgreich gesendet');
+                    alert('✅ Ihre Anfrage wurde erfolgreich übermittelt! Unser Support-Team wird sich in Kürze bei Ihnen unter ' + email + ' melden.');
+                    
+                    closeSupportRequestModal();
+                    addMessage('Ihre Support-Anfrage wurde übermittelt. Unser Team wird sich in Kürze bei Ihnen melden.', 'bot');
+                    
+                    // Hide support button
+                    const supportContainer = document.getElementById('supportButtonContainer');
+                    if (supportContainer) {
+                        supportContainer.style.display = 'none';
+                    }
+                } else {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Fehler beim Senden der Support-Anfrage:', error);
+                alert('⚠️ Es gab ein Problem beim Übermitteln Ihrer Anfrage. Bitte versuchen Sie es erneut.');
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Close support request modal on outside click
+        document.getElementById('supportRequestModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSupportRequestModal();
+            }
+        });
+
+        window.closeChatModal = function() {
+            const modal = document.getElementById('chatModal');
+            modal.classList.remove('active');
+            
+            // Reset session ID when chat closes (start fresh next time)
+            currentSessionId = null;
+            console.log('Chat session ended. Session ID reset.');
+        };
+
+        // Email Modal Functions
+        window.openEmailModal = function() {
+            const modal = document.getElementById('emailModal');
+            modal.classList.add('active');
+        };
+
+        window.closeEmailModal = function() {
+            const modal = document.getElementById('emailModal');
+            modal.classList.remove('active');
+            document.getElementById('emailForm').reset();
+        };
+
+        // Email Form Enhancements
+        const messageField = document.getElementById('messageField');
+        const charCounter = document.getElementById('charCounter');
+        const prioritySelect = document.getElementById('prioritySelect');
+        const priorityBadge = document.getElementById('priorityBadge');
+        const fileWrapper = document.getElementById('fileWrapper');
+        const fileInput = document.getElementById('fileInput');
+        const progressSteps = document.querySelectorAll('.progress-step');
+
+        // Character counter
+        if (messageField && charCounter) {
+            messageField.addEventListener('input', function() {
+                const length = this.value.length;
+                charCounter.textContent = `${length} / 1000`;
+                
+                if (length > 900) {
+                    charCounter.style.color = '#ef4444';
+                } else if (length > 700) {
+                    charCounter.style.color = '#f59e0b';
+                } else {
+                    charCounter.style.color = '#6b7280';
+                }
+            });
+        }
+
+        // Priority badge updates
+        if (prioritySelect && priorityBadge) {
+            prioritySelect.addEventListener('change', function() {
+                const priority = this.value;
+                const badges = {
+                    low: { class: 'low', text: '🟢 Expected response: Within 24 hours' },
+                    medium: { class: 'medium', text: '🟡 Expected response: Within 4 hours' },
+                    high: { class: 'high', text: '🟠 Expected response: Within 1 hour' },
+                    urgent: { class: 'urgent', text: '🔴 Expected response: Within 15 minutes' }
+                };
+                
+                const badge = badges[priority];
+                priorityBadge.className = `priority-badge ${badge.class}`;
+                priorityBadge.textContent = badge.text;
+            });
+        }
+
+        // File drag and drop
+        if (fileWrapper && fileInput) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileWrapper.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileWrapper.addEventListener(eventName, () => {
+                    fileWrapper.classList.add('drag-over');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileWrapper.addEventListener(eventName, () => {
+                    fileWrapper.classList.remove('drag-over');
+                }, false);
+            });
+
+            fileWrapper.addEventListener('drop', function(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                fileInput.files = files;
+                updateFileDisplay(files);
+            });
+
+            fileInput.addEventListener('change', function() {
+                updateFileDisplay(this.files);
+            });
+
+            function updateFileDisplay(files) {
+                if (files.length > 0) {
+                    const fileText = fileWrapper.querySelector('.file-upload-text');
+                    fileText.textContent = `${files.length} file(s) selected`;
+                    fileText.style.color = '#10b981';
+                }
+            }
+        }
+
+        // Radio button handling for categories
+        const accountingRadio = document.getElementById('accounting');
+        const technicalRadio = document.getElementById('technical');
+        const accountingCheckboxItem = document.getElementById('accountingCheckbox');
+        const technicalCheckboxItem = document.getElementById('technicalCheckbox');
+
+        // Add visual feedback for radio button items
+        if (accountingRadio && accountingCheckboxItem) {
+            accountingRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    accountingCheckboxItem.classList.add('checked');
+                    technicalCheckboxItem.classList.remove('checked');
+                }
+            });
+        }
+
+        if (technicalRadio && technicalCheckboxItem) {
+            technicalRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    technicalCheckboxItem.classList.add('checked');
+                    accountingCheckboxItem.classList.remove('checked');
+                }
+            });
+        }
+
+        // Form progress tracking
+        const formInputs = document.querySelectorAll('#emailForm input[required], #emailForm textarea[required]');
+        
+        function updateProgress() {
+            let filledCount = 0;
+            formInputs.forEach(input => {
+                if (input.value.trim()) filledCount++;
+            });
+            
+            // Check if at least one category checkbox is checked
+            const categoryChecked = accountingCheckbox.checked || technicalCheckbox.checked;
+            if (categoryChecked) filledCount++;
+            
+            const progress = Math.ceil((filledCount / (formInputs.length + 1)) * 3);
+            progressSteps.forEach((step, index) => {
+                if (index < progress) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+
+        formInputs.forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+
+        // Update progress when checkboxes change
+        if (accountingCheckbox) accountingCheckbox.addEventListener('change', updateProgress);
+        if (technicalCheckbox) technicalCheckbox.addEventListener('change', updateProgress);
+
+        // Handle email form submission
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Check if at least one category is selected
+            const accountingChecked = accountingRadio.checked;
+            const technicalChecked = technicalRadio.checked;
+            
+            if (!accountingChecked && !technicalChecked) {
+                alert('⚠️ Please select at least one category (Accounting or Technical).');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Determine recipient email based on selected category
+            let recipientEmail = '';
+            let department = '';
+            
+            if (accountingChecked) {
+                recipientEmail = 'customerservice.DACH@carrier.com';
+                department = 'Accounting';
+            } else if (technicalChecked) {
+                recipientEmail = 'support.DACH@carrier.com';
+                department = 'Technical';
+            }
+            
+            // Prepare payload for n8n webhook
+            const payload = {
+                formData: {
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone || '',
+                    customerNumber: data.customerNumber,
+                    subject: data.subject,
+                    priority: data.priority,
+                    category: data.category,
+                    message: data.message
+                },
+                routing: {
+                    recipientEmail: recipientEmail,
+                    department: department
+                },
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    source: 'support_center_web_form',
+                    userAgent: navigator.userAgent,
+                    formVersion: '1.0'
+                }
+            };
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Send to n8n webhook
+                const response = await fetch('http://100.118.164.23:5678/webhook/448332c9-937c-4c07-bf08-140bd0e2cd0c', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Email sent successfully:', result);
+                    
+                    // Show success message
+                    alert(`✅ Thank you for contacting us! Your message has been sent to ${department} (${recipientEmail}). We will respond based on your priority level.`);
+                    closeEmailModal();
+                    
+                    // Reset form and progress
+                    this.reset();
+                    accountingCheckboxItem.classList.remove('checked');
+                    technicalCheckboxItem.classList.remove('checked');
+                    progressSteps.forEach(step => step.classList.remove('active'));
+                    progressSteps[0].classList.add('active');
+                    charCounter.textContent = '0 / 1000';
+                    priorityBadge.className = 'priority-badge medium';
+                    priorityBadge.textContent = '🟡 Expected response: Within 4 hours';
+                } else {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('⚠️ There was an error sending your message. Please try again or contact support directly.');
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Close modals on outside click
+        document.getElementById('chatModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeChatModal();
+            }
+        });
+
+        document.getElementById('emailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEmailModal();
+            }
+        });
+    </script>
+</body>
+</html>
