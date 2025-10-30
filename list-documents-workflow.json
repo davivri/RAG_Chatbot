@@ -1,0 +1,81 @@
+{
+  "name": "List All Documents",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "list-documents",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-list-docs",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "list-docs"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n  id,\n  title,\n  url,\n  created_at,\n  (SELECT COUNT(*) FROM documents_pg WHERE metadata->>'file_id' = document_metadata.id) as chunk_count\nFROM document_metadata \nORDER BY created_at DESC"
+      },
+      "id": "get-all-documents",
+      "name": "Get All Documents",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [450, 300],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_YOUR_POSTGRES_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get All Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Documents": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "id": "list-documents-workflow",
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}

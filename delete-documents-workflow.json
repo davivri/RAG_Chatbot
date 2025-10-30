@@ -1,0 +1,264 @@
+{
+  "name": "Delete Documents",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "delete-documents",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-delete-docs",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "delete-docs"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get document_ids from body\nlet ids = $input.item.json.body.document_ids;\n\n// If string, split by comma\nif (typeof ids === 'string') {\n  ids = ids.split(',').map(id => id.trim()).filter(id => id.length > 0);\n}\n\n// If not array, make it array\nif (!Array.isArray(ids)) {\n  ids = [ids];\n}\n\n// Return array of items\nreturn ids.map(id => ({ json: { document_id: id } }));"
+      },
+      "id": "extract-ids",
+      "name": "Extract IDs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, title FROM document_metadata WHERE id = '{{ $json.document_id }}'"
+      },
+      "id": "get-document-info",
+      "name": "Get Document Info",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [650, 300],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_YOUR_POSTGRES_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $input.all().length }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "if-found",
+      "name": "IF Found",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM documents_pg WHERE metadata->>'file_id' = '{{ $('Extract IDs').item.json.document_id }}'"
+      },
+      "id": "delete-chunks",
+      "name": "Delete Chunks",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1050, 200],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_YOUR_POSTGRES_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM document_metadata WHERE id = '{{ $('Extract IDs').item.json.document_id }}' RETURNING id, title"
+      },
+      "id": "delete-metadata",
+      "name": "Delete Metadata",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1250, 200],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_YOUR_POSTGRES_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "deleted"
+            },
+            {
+              "name": "document_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "success-result",
+      "name": "Success",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1450, 200]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "not_found"
+            },
+            {
+              "name": "document_id",
+              "value": "={{ $('Extract IDs').item.json.document_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "not-found-result",
+      "name": "Not Found",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1050, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1650, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract IDs": {
+      "main": [
+        [
+          {
+            "node": "Get Document Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Document Info": {
+      "main": [
+        [
+          {
+            "node": "IF Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Found": {
+      "main": [
+        [
+          {
+            "node": "Delete Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Not Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Chunks": {
+      "main": [
+        [
+          {
+            "node": "Delete Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Metadata": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Not Found": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "id": "delete-documents-workflow",
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}
