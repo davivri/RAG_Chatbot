@@ -31,7 +31,8 @@ Write-Host "🔧 Starting n8n..." -ForegroundColor Yellow
 $env:N8N_SECURE_COOKIE = "false"
 
 # Start n8n in background
-Start-Process powershell -ArgumentList "`$env:N8N_SECURE_COOKIE='false'; n8n start" -WindowStyle Hidden
+$n8nCommand = '$env:N8N_SECURE_COOKIE="false"; n8n start'
+Start-Process powershell -ArgumentList $n8nCommand -WindowStyle Hidden
 
 Start-Sleep -Seconds 5
 
