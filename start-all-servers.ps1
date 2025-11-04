@@ -4,13 +4,13 @@
 # Access via Tailscale IP only (no Funnel)
 # ============================================
 
-Write-Host "🚀 Starting all servers..." -ForegroundColor Cyan
+Write-Host "Starting all servers..." -ForegroundColor Cyan
 Write-Host ""
 
 # ============================================
 # STEP 1: Stop any existing processes
 # ============================================
-Write-Host "🛑 Stopping existing processes..." -ForegroundColor Yellow
+Write-Host "Stopping existing processes..." -ForegroundColor Yellow
 
 # Stop n8n (node processes)
 Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force
@@ -25,7 +25,7 @@ Write-Host ""
 # ============================================
 # STEP 2: Start n8n
 # ============================================
-Write-Host "🔧 Starting n8n..." -ForegroundColor Yellow
+Write-Host "Starting n8n..." -ForegroundColor Yellow
 
 # Set environment variable to disable secure cookie
 $env:N8N_SECURE_COOKIE = "false"
@@ -48,7 +48,7 @@ Write-Host ""
 # ============================================
 # STEP 3: Start HTML Server
 # ============================================
-Write-Host "🌐 Starting HTML server..." -ForegroundColor Yellow
+Write-Host "Starting HTML server..." -ForegroundColor Yellow
 
 # Get script directory (where this script is located)
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -74,14 +74,14 @@ Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "✅ ALL SERVERS STARTED!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📍 Access URLs (via Tailscale):" -ForegroundColor Yellow
+Write-Host "Access URLs (via Tailscale):" -ForegroundColor Yellow
 Write-Host "   HTML Page: http://100.118.164.23:8000" -ForegroundColor White
 Write-Host "   n8n:       http://100.118.164.23:5678" -ForegroundColor White
 Write-Host ""
-Write-Host "🔍 To verify processes are running:" -ForegroundColor Yellow
+Write-Host "To verify processes are running:" -ForegroundColor Yellow
 Write-Host "   Get-Process node, python" -ForegroundColor White
 Write-Host ""
-Write-Host "🛑 To stop all servers:" -ForegroundColor Yellow
+Write-Host "To stop all servers:" -ForegroundColor Yellow
 Write-Host "   Get-Process node, python | Stop-Process -Force" -ForegroundColor White
 Write-Host ""
 Write-Host "Press any key to exit..." -ForegroundColor Gray
