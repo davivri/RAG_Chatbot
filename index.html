@@ -1801,6 +1801,19 @@
     <script type="module">
         import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+        // API Configuration - Cloudflare Tunnel URL
+        const API_CONFIG = {
+            BASE_URL: 'https://paying-boat-continuing-usgs.trycloudflare.com',
+            CHAT_WEBHOOK: '/webhook/9226b918-31f1-4039-a303-0e0f1bb343a7/chat',
+            SUPPORT_WEBHOOK: '/webhook/3eca44d2-113b-4461-8a2c-aac4ea8ba945',
+            EMAIL_WEBHOOK: '/webhook/448332c9-937c-4c07-bf08-140bd0e2cd0c'
+        };
+
+        // Helper function to get full API URL
+        function getApiUrl(endpoint) {
+            return API_CONFIG.BASE_URL + endpoint;
+        }
+
         let chatInitialized = false;
         let currentSessionId = null;
 
@@ -1849,7 +1862,7 @@
 
                 try {
                     // Send message to n8n webhook with persistent session ID
-                    const response = await fetch('http://100.118.164.23:5678/webhook/9226b918-31f1-4039-a303-0e0f1bb343a7/chat', {
+                    const response = await fetch(getApiUrl(API_CONFIG.CHAT_WEBHOOK), {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -2089,7 +2102,7 @@
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch('http://100.118.164.23:5678/webhook/3eca44d2-113b-4461-8a2c-aac4ea8ba945', {
+                const response = await fetch(getApiUrl(API_CONFIG.SUPPORT_WEBHOOK), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2366,7 +2379,7 @@
             
             try {
                 // Send to n8n webhook
-                const response = await fetch('http://100.118.164.23:5678/webhook/448332c9-937c-4c07-bf08-140bd0e2cd0c', {
+                const response = await fetch(getApiUrl(API_CONFIG.EMAIL_WEBHOOK), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
