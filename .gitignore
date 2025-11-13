@@ -1,3 +1,8 @@
 .DS_Store
 node_modules/
 .env
+BUSINESS_CASE_SUMMARY.md
+.gitignore
+.gitignore
+SYSTEM_DOCUMENTATION.md
+QUICK_START_DEPLOYMENT.md
